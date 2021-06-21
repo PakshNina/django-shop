@@ -1,4 +1,4 @@
-from .shop import ProductAdmin, OrderAdmin, OrderItemAdmin, CustomerAdmin
+from .shop_admin import ProductAdmin, OrderAdmin, OrderItemAdmin, CustomerAdmin
 
 
 __all__ = [

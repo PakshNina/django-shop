@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row">
+        {% for product in products %}
+            <div class="col-sm mb-4">
+                <div class="card" style="width: 20rem;">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <form method="post">{% csrf_token %}
+                                <a href="{% url 'product-page' product.id %}" class="card-link"><h4
+                                        class="card-title">{{ product.name }}</h4></a>
+                                <p class="card-text">Цена за штуку: {{ product.price|floatformat }} рублей</p>
+                                {% if product.stock_quantity > 0 %}
+                                    <p class="card-text text-success">Есть в наличии!</p>
+                                    <div>
+                                        <a class="btn btn-info" href="{% url 'product-page' product.id %}">Заказать</a>
+                                    </div>
+                                {% else %}
+                                    <p class="card-text text-muted">Ожидается поступление</p>
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+

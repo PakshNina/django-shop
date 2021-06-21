@@ -9,7 +9,7 @@ class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название', help_text='Название товара')
     description = models.TextField(verbose_name='Описание', help_text='Описание товара')
     price = models.FloatField(verbose_name='Цена', help_text='Цена за одну штуку')
-    quantity = models.PositiveIntegerField(verbose_name='Количество', help_text='Количество товара на складе')
+    stock_quantity = models.PositiveIntegerField(verbose_name='Количество', help_text='Количество товара на складе')
 
     def __str__(self):
         return self.name
