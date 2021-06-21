@@ -14,4 +14,4 @@ def get_total_items_number(order_entities):
 
 
 def get_total_price(order_entities):
-    return sum([item.get('price', 0) for item in order_entities.values()])
+    return sum([item.get('price', 0) * item.get('quantity', 0) for item in order_entities.values()])

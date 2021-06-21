@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, FormView
 
 from ..core.utils import get_products, get_product_by_id, get_total_price
-from ..forms.order_form import AddToCartForm
+from ..forms.order_form import AddToCartForm, CartForm
 from .mixins import CartInformationMixin
 
 
@@ -65,8 +65,9 @@ class ProductPageView(CartInformationMixin, FormView):
         return render(request, self.template_name, context)
 
 
-class CartPageView(CartInformationMixin, TemplateView):
+class CartPageView(CartInformationMixin, FormView):
     template_name = 'user_cart.html'
+    form_class = CartForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
@@ -74,3 +75,10 @@ class CartPageView(CartInformationMixin, TemplateView):
         context['order_entities'] = order_entities
         context['total_price'] = get_total_price(order_entities)
         return context
+
+    def post(self, request, *args, **kwargs):
+        clear_cart = request.POST.get('clear_cart', False)
+        if clear_cart:
+            del self.request.session['order_entities']
+        context = self.get_context_data()
+        return render(request, self.template_name, context)
