@@ -10,14 +10,10 @@
                                 <a href="{% url 'product-page' product.id %}" class="card-link"><h4
                                         class="card-title">{{ product.name }}</h4></a>
                                 <p class="card-text">Цена за штуку: {{ product.price|floatformat }} рублей</p>
-                                {% if product.stock_quantity > 0 %}
-                                    <p class="card-text text-success">Есть в наличии!</p>
-                                    <div>
-                                        <a class="btn btn-info" href="{% url 'product-page' product.id %}">Заказать</a>
-                                    </div>
-                                {% else %}
-                                    <p class="card-text text-muted">Ожидается поступление</p>
-                                {% endif %}
+                                <p class="card-text text-success">Есть в наличии!</p>
+                                <div>
+                                    <a class="btn btn-info" href="{% url 'product-page' product.id %}">Заказать</a>
+                                </div>
                             </form>
                         </div>
                     </div>

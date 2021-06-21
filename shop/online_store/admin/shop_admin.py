@@ -6,7 +6,7 @@ from ..models.shop import Product, Order, OrderItem, Customer
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'stock_quantity')
+    list_display = ('name', 'price')
 
 
 @admin.register(Order)

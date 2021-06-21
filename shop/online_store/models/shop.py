@@ -9,7 +9,6 @@ class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название', help_text='Название товара')
     description = models.TextField(verbose_name='Описание', help_text='Описание товара')
     price = models.FloatField(verbose_name='Цена', help_text='Цена за одну штуку')
-    stock_quantity = models.PositiveIntegerField(verbose_name='Количество', help_text='Количество товара на складе')
 
     def __str__(self):
         return self.name
@@ -19,6 +18,7 @@ class Order(models.Model):
     created_at = models.DateTimeField(default=timezone.now, verbose_name='Дата создания')
     state = models.CharField(max_length=10, choices=ORDERS_STATUS_CHOICES, default=OrderStatuses.CREATED)
     customer = models.ForeignKey('Customer', related_name='customer', on_delete=models.SET_NULL, null=True)
+    comment = models.TextField(max_length=1000, verbose_name='Комментарий от покупателя', null=True)
 
     def __str__(self):
         return f'Заказ {self.id}'

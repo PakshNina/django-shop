@@ -5,11 +5,12 @@
             <div class="alert alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}success{% else %}danger{% endif %}"
                  role="alert">
                 {{ message }}
-                <div>
+                <h5 class="m-0">
                     {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-                        <a href="{% url 'user-cart' %}" class="card-link">Перейти в корзину</a>
+                        <a href="{% url 'user-cart' %}">Перейти в корзину</a> или
+                        <a href="{% url 'main-page' %}">Продолжить покупки</a>
                     {% endif %}
-                </div>
+                </h5>
             </div>
         {% endfor %}
     {% endif %}
@@ -20,10 +21,6 @@
                 <div class="row mb-4">
                     <div class="col-sm">Цена</div>
                     <div class="col-sm">{{ product.price|floatformat }} рублей за штуку</div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col-sm">Количество на складе</div>
-                    <div class="col-sm">{{ product.stock_quantity }} штук</div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-sm">Описание</div>
@@ -40,16 +37,9 @@
                             </div>
                         </div>
                     {% endfor %}
-                    <div class="row">
-                        <div class="col-sm">
-                            <a class="btn btn-info float-right" href="{% url 'main-page' %}">Назад</a>
-
-                        </div>
-                        <div class="col-sm">
-                            <input type="submit" class="btn btn-success" value="Добавить в корзину">
-                        </div>
+                    <div>
+                        <input type="submit" class="btn btn-success" value="Добавить в корзину">
                     </div>
-
                 </form>
             </div>
         </div>
