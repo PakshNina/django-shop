@@ -1,5 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}success{% else %}danger{% endif %}"
+                 role="alert">
+                {{ message }}
+                <div>
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                        <a href="{% url 'user-cart' %}" class="card-link">Перейти в корзину</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
     <div class="col-sm mb-4">
         <div class="card" style="width: 50%;">
             <div class="card-body">
@@ -16,6 +29,28 @@
                     <div class="col-sm">Описание</div>
                     <div class="col-sm">{{ product.description }}</div>
                 </div>
+                <form method="post">{% csrf_token %}
+                    {% for field in form %}
+                        <div class="row mb-4">
+                            <div class="col-sm">
+                                {{ field.label }}
+                            </div>
+                            <div class="col-sm">
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="row">
+                        <div class="col-sm">
+                            <a class="btn btn-info float-right" href="{% url 'main-page' %}">Назад</a>
+
+                        </div>
+                        <div class="col-sm">
+                            <input type="submit" class="btn btn-success" value="Добавить в корзину">
+                        </div>
+                    </div>
+
+                </form>
             </div>
         </div>
     </div>
