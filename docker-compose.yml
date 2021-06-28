@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  database:
+    restart: unless-stopped
+    image: django-shop/database:${BUILD_NUMBER:-latest}
+    build:
+      context: ./docker/database/
+    volumes:
+      - django-shop-db-data:/var/lib/postgresql/data
+      - django-shop-db-logs:/var/log/postgresql
+    command:
+      - "postgres"
+      - "-c"
+      - "log_destination=stderr"
+      - "-c"
+      - "logging_collector=1"
+      - "-c"
+      - "log_min_duration_statement=2000"
+      - "-c"
+      - "shared_buffers=512MB"
+      - "-c"
+      - "work_mem=16MB"
+      - "-c"
+      - "max_connections=200"
+      - "-c"
+      - "log_directory=/var/log/postgresql"
+    ports:
+      - '5432:5432'
+
+  shop:
+    restart:
+      unless-stopped
+    depends_on:
+      - database
+    image: django-shop/django-shop:${BUILD_NUMBER:-latest}
+    tmpfs:
+      - /tmp
+    build:
+      context: .
+      dockerfile: docker/django-shop/Dockerfile
+
+  haproxy:
+    restart: unless-stopped
+    image: django-shop/haproxy:${BUILD_NUMBER:-latest}
+    build:
+      context: ./docker/haproxy/
+    ports:
+      - '8080:80'
+
+volumes:
+  django-shop-db-data:
+    external: true
+  django-shop-db-logs:
+    external: true
